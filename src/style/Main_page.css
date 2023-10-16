@@ -1,0 +1,307 @@
+:root {
+  /*콘텐츠내용 width*/
+  --content-width: 1200px;
+  /*메인컬러*/
+  --main-color: #21325e;
+  /*보조컬러*/
+  --sub-color: #f7be16;
+  /*보조컬러-뒤에 깔아주는 연한 회색*/
+  --back-color: #f5f5f5;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+/*메인페이지 wrap*/
+.main_wrap {
+  /* border: 1px solid #000; */
+  margin: auto;
+  margin-top: 90px;
+}
+
+/*서비스 소개*/
+.main_service {
+  /* border: 1px solid #000; */
+  width: var(--content-width);
+  margin: auto;
+}
+.service_title {
+}
+.service_title h2 {
+}
+.service_wrap {
+  /* border: 1px solid red; */
+  width: var(--content-width);
+  box-sizing: border-box;
+  height: 400px;
+  margin-top: 40px;
+}
+.service_inner {
+  position: relative;
+  margin: auto;
+  background-color: var(--back-color);
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 580px;
+  height: 170px;
+  margin-bottom: 30px;
+  padding: 30px 50px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+/*서비스 기능 호버했을때 애니메이션 효과*/
+.service_inner:hover {
+  transform: scale(1.05);
+  box-shadow: 1px 1px 5px lightgray;
+  transition: 0.3s;
+  /* animation: ani 1s; */
+}
+/* @keyframes ani {
+  100% {
+    transform: scale(1.1);
+  }
+  0% {
+    transform: scale(1.1);
+  }
+} */
+.service_inner:nth-of-type(2n + 1) {
+  margin-right: 30px;
+}
+.racingicon {
+  position: absolute;
+  /* border: 1px solid #000; */
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+.service_inner p {
+  /* border: 1px solid #000; */
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  height: 30px;
+  margin-left: 40px;
+}
+.service_inner span {
+  display: block;
+  font-size: 17px;
+  margin-top: 20px;
+}
+.service_button_wrap {
+  /* border: 1px solid #000; */
+  width: var(--content-width);
+  margin: auto;
+  margin-top: 50px;
+}
+.service_button {
+  width: 200px;
+  margin: auto;
+  text-align: center;
+}
+.service_button a {
+  border: 2px solid var(--main-color);
+  text-align: center;
+  padding: 15px 45px;
+  text-decoration: none;
+  border-radius: 30px;
+  color: #000;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.service_button a:hover {
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+/*운송 서비스 단계*/
+.main_step {
+  background-image: url(../assets/step_keyimage.jpg);
+  background-size: 100%;
+  height: 750px;
+  background-repeat: no-repeat;
+  background-position: top center;
+  margin-top: 100px;
+}
+.stitle_wrap {
+  width: var(--content-width);
+  margin: auto;
+}
+.step_title {
+  /* border: 1px solid #000; */
+  width: var(--content-width);
+  display: inline-block;
+  margin-top: 100px;
+}
+.step_title h1 {
+  text-align: center;
+}
+/*아이콘 이미지 단계*/
+.step_wrap {
+  /* border: 1px solid #000; */
+  width: var(--content-width);
+  margin: auto;
+  margin-top: 100px;
+}
+.icon_wrap {
+  /* border: 1px solid red; */
+  text-align: center;
+}
+.icon_inner {
+  /* border: 1px solid #000; */
+  position: relative;
+  display: inline-block;
+  background-color: var(--sub-color);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+.stepicon {
+  /* border: 1px solid #000; */
+  position: absolute;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.icon_arrow {
+  position: relative;
+  /* border: 1px solid #000; */
+  display: inline-block;
+  width: 100px;
+  height: 140px;
+}
+.arrowicon {
+  position: absolute;
+  width: 50px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*텍스트 단계*/
+.step_text {
+  /* border: 1px solid #000; */
+  width: var(--content-width);
+  margin: auto;
+}
+.text_wrap {
+  /* border: 1px solid red; */
+  text-align: center;
+}
+.text_inner {
+  /* border: 1px solid #000; */
+  display: inline-block;
+  width: 220px;
+  height: 150px;
+  margin-right: 20px;
+}
+.text_inner:last-child {
+  margin-right: 0px;
+}
+.text_inner p {
+  /* border: 1px solid red; */
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.text_inner span {
+  font-size: 17px;
+  font-weight: bold;
+}
+.step_button_wrap {
+  /* border: 1px solid #000; */
+  width: var(--content-width);
+  margin: auto;
+  margin-top: 50px;
+}
+.step_button {
+  width: 200px;
+  margin: auto;
+  text-align: center;
+}
+.step_button a {
+  background-color: var(--main-color);
+  text-align: center;
+  padding: 15px 45px;
+  text-decoration: none;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.step_button a:hover {
+  background-color: var(--sub-color);
+  color: #000;
+}
+
+/*무인 차량관제 도입효과*/
+.effect_back {
+  width: 100%;
+  background-color: var(--back-color);
+}
+.main_effect {
+  /* border: 1px solid #000; */
+  width: var(--content-width);
+  margin: auto;
+  margin-top: 100px;
+}
+.title_effect {
+  /* border: 1px solid #000; */
+  display: inline-block;
+  width: var(--content-width);
+  margin: auto;
+  margin-top: 100px;
+}
+.title_effect h1 {
+  text-align: center;
+}
+.effect_wrap {
+  /* border: 1px solid red; */
+  width: var(--content-width);
+  text-align: center;
+  display: inline-block;
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+.effect_inner {
+  /* border: 1px solid #000; */
+  text-align: center;
+  margin: auto;
+  width: 500px;
+  display: inline-block;
+  margin-right: 40px;
+}
+.effect_inner:last-child {
+  margin-right: 0px;
+}
+.effect_image {
+  /* border: 1px solid #000; */
+  width: 500px;
+  height: 350px;
+}
+.effect_inner p {
+  /* border: 1px solid #000; */
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: left;
+  height: 60px;
+}
+.exception {
+  height: 60px;
+  line-height: 60px;
+}
+.effect_inner span {
+  /* border: 1px solid #000; */
+  display: inline-block;
+  width: 100%;
+  font-size: 18px;
+  text-align: left;
+  padding-top: 20px;
+}

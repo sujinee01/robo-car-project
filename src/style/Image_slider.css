@@ -1,0 +1,35 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+/*키이미지*/
+.keyimage_wrap {
+  margin: auto;
+  position: relative;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  width: 100vw;
+  height: 600px;
+}
+/*키이미지 텍스트*/
+.keyspan_style {
+  border: 1px solid #000;
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  padding: 20px;
+  font-size: 20px;
+  background: #efefef;
+  text-align: center;
+}
+
+img {
+  width: 100vw;
+}
