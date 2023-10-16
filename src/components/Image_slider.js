@@ -25,7 +25,7 @@ const ImageSlider = () => {
       </div>
       <div className="each-slide-effect">
         <div className="keyimage_wrap">
-          <img src={slideimage} classNamee="keyimage_style" alt="React" />
+          <img src={slideimage} className="keyimage_style" alt="React" />
           <span className="keyspan_style">
             하나의 플랫폼에서 운송부터 예약까지3
           </span>

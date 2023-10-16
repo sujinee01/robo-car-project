@@ -9,9 +9,11 @@ function Join() {
   useEffect(() => {
     if (message) {
       alert(message);
+      navigate("/login"); // 로그인 페이지로 이동
     }
-  }, [message]);
+  }, [message, navigate]);
 
+  /** 회원가입 폼 내용을 DB에 저장하기 위한 함수 */
   const signUp = async (e) => {
     e.preventDefault();
 
@@ -45,14 +47,11 @@ function Join() {
 
       if (response.ok) {
         const data = await response.json();
-
+        console.log(name);
         if (data.success) {
           setMessage(`환영합니다, ${name}님!`);
-          alert(message); // 현재 상태 값을 사용
-          navigate("/login"); // 로그인 페이지로 이동
         } else {
           setMessage("회원가입에 실패했습니다.");
-          alert(message); // 현재 상태 값을 사용
         }
       }
     } catch (error) {
@@ -82,18 +81,26 @@ function Join() {
   const [isId, setIsId] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-  const [isname, setIsName] = useState(false);
+  const [isName, setIsName] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
   const [isAddress, setIsAddress] = useState(false);
 
+  /** 유효성 검사를 통과했을 때 글자색 변경해주는 함수 */
+  const ValidMessageColor = (pass) => {
+    if (pass) {
+      return { color: "green" };
+    }
+    return { color: "red" };
+  };
+
   const onChangeId = (e) => {
     const currentId = e.target.value;
     setId(currentId);
-    const idRegExp = /^[a-zA-z0-9]{4,12}$/;
+    const idRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,12}$/;
 
     if (!idRegExp.test(currentId)) {
-      setIdMessage("4~16문자 이내의 대/소문자 또는 숫자만 입력해 주세요!");
+      setIdMessage("4~16자 이내의 대/소문자 또는 숫자만 입력해 주세요!");
       setIsId(false);
     } else {
       setIdMessage("사용가능한 아이디 입니다.");
@@ -117,13 +124,17 @@ function Join() {
     const currentPasswordConfirm = e.target.value;
     setPasswordConfirm(currentPasswordConfirm);
     if (password !== currentPasswordConfirm) {
-      setPasswordConfirmMessage("다시 입력해주세요.");
+      setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
       setIsPasswordConfirm(false);
     } else {
-      setPasswordConfirmMessage("비밀번호가 일치합니다!");
-      setIsPasswordConfirm(true);
-      const pwdConfirm = document.getElementById("pwd_confirm"); // 비밀번호가 일치하는 경우 안내 메세지 녹색으로
-      pwdConfirm.style.color = "green";
+      if (isPassword === false) {
+        setPasswordConfirmMessage(
+          "[비밀번호] 입력란에 유효한 비밀번호를 입력해주세요."
+        );
+      } else {
+        setPasswordConfirmMessage("비밀번호가 일치합니다!");
+        setIsPasswordConfirm(true);
+      }
     }
   };
   const onChangeName = (e) => {
@@ -153,7 +164,7 @@ function Join() {
   const addHyphen = (e) => {
     const currentNumber = e.target.value;
     setPhone(currentNumber);
-    if (currentNumber.length == 3 || currentNumber.length == 8) {
+    if (currentNumber.length === 3 || currentNumber.length === 8) {
       setPhone(currentNumber + "-");
       onChangePhone(currentNumber + "-");
     } else {
@@ -181,114 +192,149 @@ function Join() {
 
   return (
     <>
-      <div class="Join_body">
+      <div className="Join_body">
         <h3>ROBO-CAR</h3>
         <h3>회원가입</h3>
         <br />
         <form className="form" action="/Join" method="post" onSubmit={signUp}>
+          {/* 아이디 */}
           <div className="form-el">
-            <label class="red_star">*</label>
+            <label className="red_star">*</label>
             <label htmlFor="id">아이디</label> <br />
             <input
-              class="id_textbox"
+              className="id_textbox"
               id="id"
               name="id"
               value={id}
               onChange={onChangeId}
+              placeholder="ID"
+              required
             />
-            <button class="id_confirm" onClick="test()">
-              중복확인
-            </button>
-            <p className="message"> {idMessage} </p>
+            <button className="id_confirm">중복확인</button>
+            <p className="message" style={ValidMessageColor(isId)}>
+              {idMessage}
+            </p>
           </div>
 
+          {/* 비밀번호 */}
           <div className="form-el">
-            <label class="red_star">*</label>
+            <label className="red_star">*</label>
             <label htmlFor="password">비밀번호</label> <br />
             <input
               type="password"
-              class="textbox"
+              className="textbox"
               id="password"
               name="password"
               value={password}
               onChange={onChangePassword}
+              placeholder="PASSWORD"
+              required
             />
-            <p className="message">{passwordMessage}</p>
+            <p className="message" style={ValidMessageColor(isPassword)}>
+              {passwordMessage}
+            </p>
           </div>
 
+          {/* 비밀번호 확인 */}
           <div className="form-el">
-            <label class="red_star">*</label>
+            <label className="red_star">*</label>
             <label htmlFor="passwordConfirm">비밀번호 확인</label> <br />
             <input
               type="password"
-              class="textbox"
+              className="textbox"
               id="passwordConfirm"
               name="passwordConfirm"
               value={passwordConfirm}
               onChange={onChangePasswordConfirm}
+              placeholder="PASSWORD CHECK"
+              required
             />
-            <p id="pwd_confirm" className="message">
+            <p className="message" style={ValidMessageColor(isPasswordConfirm)}>
               {passwordConfirmMessage}
             </p>
           </div>
 
+          {/* 이름 */}
           <div className="form-el">
-            <label class="red_star">*</label>
+            <label className="red_star">*</label>
             <label htmlFor="name">이름</label> <br />
             <input
-              class="textbox"
+              className="textbox"
               id="name"
               name="name"
               value={name}
               onChange={onChangeName}
+              placeholder="NAME"
+              required
             />
-            <p className="message">{nameMessage}</p>
+            <p className="message" style={ValidMessageColor(isName)}>
+              {nameMessage}
+            </p>
           </div>
 
+          {/* 전화번호 */}
           <div className="form-el">
-            <label class="red_star">*</label>
+            <label className="red_star">*</label>
             <label htmlFor="phone">전화번호</label> <br />
             <input
-              class="textbox"
+              className="textbox"
               id="phone"
               name="phone"
               value={phone}
               onChange={addHyphen}
+              placeholder="01X-0000-0000"
+              required
             />
-            <p className="message">{phoneMessage}</p>
+            <p className="message" style={ValidMessageColor(isPhone)}>
+              {phoneMessage}
+            </p>
           </div>
 
+          {/* 이메일 */}
           <div className="form-el">
             <label htmlFor="email">이메일</label> <br />
             <input
-              class="textbox"
+              className="textbox"
               id="email"
               name="email"
               value={email}
+              placeholder="example@domain.~"
               onChange={onChangeEmail}
             />
-            <p className="message">{emailMessage}</p>
+            <p className="message" style={ValidMessageColor(isEmail)}>
+              {emailMessage}
+            </p>
           </div>
 
           <div className="form-el">
-            <label class="red_star">*</label>
+            <label className="red_star">*</label>
             <label htmlFor="address">주소</label> <br />
-            <div class="addr_form">
-              <input class="addr_input" type="text" name="addr1"></input>
-              <button class="addr_find" type="submit">
+            <div className="addr_form">
+              <input
+                className="addr_input"
+                type="text"
+                name="addr1"
+                required
+              ></input>
+              <button className="addr_find" type="submit">
                 주소찾기
               </button>
-              <input class="textbox" type="text" name="addr2"></input>
+              <input
+                className="textbox"
+                type="text"
+                name="addr2"
+                required
+              ></input>
             </div>
           </div>
 
           <div className="form-el">
-            <label class="red_star">*</label>
+            <label className="red_star">*</label>
             <label htmlFor="office">회사명</label> <br />
-            <input class="textbox" id="office" name="office" />
+            <input className="textbox" id="office" name="office" required />
           </div>
           <br />
-          <button class="join" type="submit">
+          <button className="join" type="submit">
             회원가입
           </button>
         </form>

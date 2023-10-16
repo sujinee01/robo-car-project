@@ -30,18 +30,6 @@ app.post("/Join", (req, res) => {
   const paramOffice = body.office || req.query.office;
   const paramAddr = paramAddr1 + paramAddr2;
 
-  console.log([
-    paramName,
-    paramId,
-    paramPassword,
-    paramPhone,
-    paramEmail,
-    paramAddr1,
-    paramAddr2,
-    paramAddr,
-    paramOffice,
-  ]);
-
   db.getConnection((err, conn) => {
     console.log("회원가입 요청");
     if (err) {
