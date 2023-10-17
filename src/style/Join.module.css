@@ -8,7 +8,7 @@
   !important 속성으로 스타일 강제 적용
   input 상자 크기 조절 및 패딩 값 조절 
 */
-input {
+.form_el input {
   height: 37px !important;
   padding: 5px 10px !important;
   margin-bottom: 5px !important;
@@ -24,7 +24,7 @@ input {
   place-items: center;
 }
 
-.Join_body.form-el {
+.Join_body.form_el {
   font-weight: border;
   display: grid;
   place-items: center;
@@ -54,7 +54,7 @@ input {
   font-weight: bold;
 }
 
-.Join_body .form-el .red_star {
+.Join_body .form_el .red_star {
   font-weight: 900;
   color: red;
 }
@@ -76,7 +76,7 @@ input {
   background-color: #f5f5f5; /* 배경색 */
 }
 
-.form-el > label:nth-last-child(n) {
+.form_el > label:nth-last-child(n) {
   font-size: 13px !important;
 }
 
@@ -128,7 +128,7 @@ input {
   font-weight: 900;
 }
 
-.form .form-el:nth-last-child(n) {
+.form .form_el:nth-last-child(n) {
   margin-top: 10px;
 }
 

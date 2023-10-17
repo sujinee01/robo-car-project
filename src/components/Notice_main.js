@@ -1,20 +1,20 @@
 import React from "react";
-import "../style/Notice_main.css";
+import styles from "../style/Notice_main.module.css"; // 파일명 및 변수명 수정
 
-function Notice_main() {
+function NoticeMain() {
   return (
-    <section class="notice">
-      <div class="page-title">
-        <div class="container">
+    <section className={styles.notice}>
+      <div className={styles.pageTitle}>
+        <div className={styles.container}>
           <h3>공지사항</h3>
         </div>
       </div>
-      <div id="board-search">
-        <div class="container">
-          <div class="search-window">
+      <div className={styles.boardSearch}>
+        <div className={styles.container}>
+          <div className={styles.searchWindow}>
             <form action="">
-              <div class="search-wrap">
-                <label for="search" class="blind">
+              <div className={styles.searchWrap}>
+                <label htmlFor="search" className={styles.blind}>
                   공지사항 내용 검색
                 </label>
                 <input
@@ -22,9 +22,11 @@ function Notice_main() {
                   type="search"
                   name=""
                   placeholder="검색어를 입력해주세요."
-                  value=""
                 />
-                <button type="submit" class="btn btn-search">
+                <button
+                  type="submit"
+                  className={`${styles.btn} ${styles.btnSearch}`}
+                >
                   검색
                 </button>
               </div>
@@ -33,17 +35,17 @@ function Notice_main() {
         </div>
       </div>
       <div id="board-list">
-        <div class="container">
-          <table class="board-table">
+        <div className={styles.container}>
+          <table className={styles.boardTable}>
             <thead>
               <tr>
-                <th scope="col" class="th-num">
+                <th scope="col" className={styles.thNum}>
                   번호
                 </th>
-                <th scope="col" class="th-title">
+                <th scope="col" className={styles.thTitle}>
                   제목
                 </th>
-                <th scope="col" class="th-date">
+                <th scope="col" className={styles.thDate}>
                   작성자
                 </th>
               </tr>
@@ -95,16 +97,16 @@ function Notice_main() {
         </div>
       </div>
       <br />
-      <div class="page-list">
-        <div class="num-btn">
-          <button class="btn btn-page">1</button>
+      <div className={styles.pageList}>
+        <div className={styles.numBtn}>
+          <button className={`${styles.btn} ${styles.btnPage}`}>1</button>
         </div>
-        <div class="num-btn">
-          <button class="btn btn-page">2</button>
+        <div className={styles.numBtn}>
+          <button className={`${styles.btn} ${styles.btnPage}`}>2</button>
         </div>
       </div>
     </section>
   );
 }
 
-export default Notice_main;
+export default NoticeMain;

@@ -1,10 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../style/Join.css";
+import styles from "../style/Join.module.css";
 
 function Join() {
   const navigate = useNavigate();
   const [message, setMessage] = useState(""); // 회원가입 메시지 상태
+
+  // 초기값 세팅 - 아이디, 비밀번호, 비밀번호확인, 이름, 이메일, 전화번호, 주소
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+
+  // 오류메세지 상태 저장
+  const [idMessage, setIdMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
+  const [addressMessage, setAddressMessage] = useState("");
+
+  // 유효성 검사
+  const [isId, setIsId] = useState(false);
+  const [idPass, setIdPass] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const [isName, setIsName] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPhone, setIsPhone] = useState(false);
+  const [isAddress, setIsAddress] = useState(false);
 
   useEffect(() => {
     if (message) {
@@ -47,7 +75,7 @@ function Join() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(name);
+
         if (data.success) {
           setMessage(`환영합니다, ${name}님!`);
         } else {
@@ -59,32 +87,42 @@ function Join() {
     }
   };
 
-  // 초기값 세팅 - 아이디, 비밀번호, 비밀번호확인, 이름, 이메일, 전화번호, 주소
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  /** 아이디 중복 검사를 위한 함수 */
+  const idOverlapChk = async () => {
+    const ChkId = id;
 
-  // 오류메세지 상태 저장
-  const [idMessage, setIdMessage] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-  const [nameMessage, setNameMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [phoneMessage, setPhoneMessage] = useState("");
-  const [addressMessage, setAddressMessage] = useState("");
+    try {
+      const response = await fetch("/idChk", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ChkId }),
+      });
 
-  // 유효성 검사
-  const [isId, setIsId] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-  const [isName, setIsName] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
-  const [isPhone, setIsPhone] = useState(false);
-  const [isAddress, setIsAddress] = useState(false);
+      if (response.ok) {
+        const data = await response.json();
+        if (isId === false) {
+          alert("유효한 아이디를 입력해 주세요.");
+        } else {
+          if (data.success && data.overlap) {
+            // 중복 검사 통과
+            setIdPass(true);
+            setIsId(true);
+            setIdMessage(data.message);
+            alert(data.message);
+          } else {
+            // 아이디 중복
+            setIdPass(false);
+            setIsId(false);
+            alert(data.message);
+          }
+        }
+      }
+    } catch {
+      console.log("아이디 중복 검사 오류");
+    }
+  };
 
   /** 유효성 검사를 통과했을 때 글자색 변경해주는 함수 */
   const ValidMessageColor = (pass) => {
@@ -95,15 +133,23 @@ function Join() {
   };
 
   const onChangeId = (e) => {
+    console.log("onChangeId 호출");
     const currentId = e.target.value;
     setId(currentId);
-    const idRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,12}$/;
+    const idRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,16}$/;
+    setIsId(false);
+    setIdPass(false);
 
     if (!idRegExp.test(currentId)) {
       setIdMessage("4~16자 이내의 대/소문자 또는 숫자만 입력해 주세요!");
-      setIsId(false);
+      // } else if (idRegExp.test(currentId) && idPass === false) {
+      //   console.log("onChangeId 2");
+      //   setIdMessage("아이디 중복확인 버튼을 눌러 중복검사를 수행해 주세요.");
+      // } else if (idPass === false) {
+      //   console.log("onChangeId 3");
+      //   setIdMessage("아이디 중복확인을 해주세요.");
     } else {
-      setIdMessage("사용가능한 아이디 입니다.");
+      setIdMessage("아이디 중복확인 버튼을 눌러 중복검사를 수행해 주세요.");
       setIsId(true);
     }
   };
@@ -192,37 +238,43 @@ function Join() {
 
   return (
     <>
-      <div className="Join_body">
+      <div className={styles.Join_body}>
         <h3>ROBO-CAR</h3>
         <h3>회원가입</h3>
         <br />
-        <form className="form" action="/Join" method="post" onSubmit={signUp}>
-          {/* 아이디 */}
-          <div className="form-el">
-            <label className="red_star">*</label>
+        <form
+          className={styles.form}
+          action="/Join"
+          method="post"
+          onSubmit={signUp}
+        >
+          <div className={styles.form_el}>
+            <label className={styles.red_star}>*</label>
             <label htmlFor="id">아이디</label> <br />
             <input
-              className="id_textbox"
+              className={styles.id_textbox}
               id="id"
               name="id"
               value={id}
               onChange={onChangeId}
               placeholder="ID"
+              maxLength={16}
               required
             />
-            <button className="id_confirm">중복확인</button>
-            <p className="message" style={ValidMessageColor(isId)}>
+            <button className={styles.id_confirm} onClick={idOverlapChk}>
+              중복확인
+            </button>
+            <p className={styles.message} style={ValidMessageColor(idPass)}>
               {idMessage}
             </p>
           </div>
 
-          {/* 비밀번호 */}
-          <div className="form-el">
-            <label className="red_star">*</label>
+          <div className={styles.form_el}>
+            <label className={styles.red_star}>*</label>
             <label htmlFor="password">비밀번호</label> <br />
             <input
               type="password"
-              className="textbox"
+              className={styles.textbox}
               id="password"
               name="password"
               value={password}
@@ -230,18 +282,17 @@ function Join() {
               placeholder="PASSWORD"
               required
             />
-            <p className="message" style={ValidMessageColor(isPassword)}>
+            <p className={styles.message} style={ValidMessageColor(isPassword)}>
               {passwordMessage}
             </p>
           </div>
 
-          {/* 비밀번호 확인 */}
-          <div className="form-el">
-            <label className="red_star">*</label>
+          <div className={styles.form_el}>
+            <label className={styles.red_star}>*</label>
             <label htmlFor="passwordConfirm">비밀번호 확인</label> <br />
             <input
               type="password"
-              className="textbox"
+              className={styles.textbox}
               id="passwordConfirm"
               name="passwordConfirm"
               value={passwordConfirm}
@@ -249,17 +300,19 @@ function Join() {
               placeholder="PASSWORD CHECK"
               required
             />
-            <p className="message" style={ValidMessageColor(isPasswordConfirm)}>
+            <p
+              className={styles.message}
+              style={ValidMessageColor(isPasswordConfirm)}
+            >
               {passwordConfirmMessage}
             </p>
           </div>
 
-          {/* 이름 */}
-          <div className="form-el">
-            <label className="red_star">*</label>
+          <div className={styles.form_el}>
+            <label className={styles.red_star}>*</label>
             <label htmlFor="name">이름</label> <br />
             <input
-              className="textbox"
+              className={styles.textbox}
               id="name"
               name="name"
               value={name}
@@ -267,17 +320,16 @@ function Join() {
               placeholder="NAME"
               required
             />
-            <p className="message" style={ValidMessageColor(isName)}>
+            <p className={styles.message} style={ValidMessageColor(isName)}>
               {nameMessage}
             </p>
           </div>
 
-          {/* 전화번호 */}
-          <div className="form-el">
-            <label className="red_star">*</label>
+          <div className={styles.form_el}>
+            <label className={styles.red_star}>*</label>
             <label htmlFor="phone">전화번호</label> <br />
             <input
-              className="textbox"
+              className={styles.textbox}
               id="phone"
               name="phone"
               value={phone}
@@ -285,42 +337,41 @@ function Join() {
               placeholder="01X-0000-0000"
               required
             />
-            <p className="message" style={ValidMessageColor(isPhone)}>
+            <p className={styles.message} style={ValidMessageColor(isPhone)}>
               {phoneMessage}
             </p>
           </div>
 
-          {/* 이메일 */}
-          <div className="form-el">
+          <div className={styles.form_el}>
             <label htmlFor="email">이메일</label> <br />
             <input
-              className="textbox"
+              className={styles.textbox}
               id="email"
               name="email"
               value={email}
               placeholder="example@domain.~"
               onChange={onChangeEmail}
             />
-            <p className="message" style={ValidMessageColor(isEmail)}>
+            <p className={styles.message} style={ValidMessageColor(isEmail)}>
               {emailMessage}
             </p>
           </div>
 
-          <div className="form-el">
-            <label className="red_star">*</label>
+          <div className={styles.form_el}>
+            <label className={styles.red_star}>*</label>
             <label htmlFor="address">주소</label> <br />
-            <div className="addr_form">
+            <div className={styles.addr_form}>
               <input
-                className="addr_input"
+                className={styles.addr_input}
                 type="text"
                 name="addr1"
                 required
               ></input>
-              <button className="addr_find" type="submit">
+              <button className={styles.addr_find} type="submit">
                 주소찾기
               </button>
               <input
-                className="textbox"
+                className={styles.textbox}
                 type="text"
                 name="addr2"
                 required
@@ -328,13 +379,18 @@ function Join() {
             </div>
           </div>
 
-          <div className="form-el">
-            <label className="red_star">*</label>
+          <div className={styles.form_el}>
+            <label className={styles.red_star}>*</label>
             <label htmlFor="office">회사명</label> <br />
-            <input className="textbox" id="office" name="office" required />
+            <input
+              className={styles.textbox}
+              id="office"
+              name="office"
+              required
+            />
           </div>
           <br />
-          <button className="join" type="submit">
+          <button className={styles.join} type="submit">
             회원가입
           </button>
         </form>

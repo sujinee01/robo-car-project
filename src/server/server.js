@@ -16,8 +16,8 @@ app.get("/", (req, res) => {
   console.log("localhost/");
 });
 
+// 회원가입 요청 처리
 app.post("/Join", (req, res) => {
-  console.log("/join 요청됨");
   const body = req.body;
 
   const paramName = body.name || req.query.name;
@@ -65,6 +65,50 @@ app.post("/Join", (req, res) => {
         res.status(200).json({ success: true, message: "사용자 추가 성공" });
       } else {
         res.status(500).json({ success: false, message: "사용자 추가 실패" });
+      }
+    });
+
+    conn.release();
+  });
+});
+
+// 아이디 중복 검사
+app.post("/idChk", (req, res) => {
+  console.log("아이디 중복 검사 요청됨");
+
+  let paramId = req.body["ChkId"];
+  let sql = `SELECT u_id FROM user WHERE u_id="${paramId}"`;
+
+  db.getConnection((err, conn) => {
+    if (err) console.log("MySQL 연결 실패");
+
+    conn.query(sql, (err, rows, fields) => {
+      if (err) {
+        console.log("쿼리 실행 실패: ", err);
+        res.status(500).json({ success: false, message: "쿼리 실행 오류" });
+        return;
+      }
+
+      if (rows.length > 0) {
+        // 입력받은 아이디가 이미 있는 경우
+        if (rows[0]["u_id"] === paramId) {
+          console.log("중복된 아이디");
+          res
+            .status(200)
+            .json({
+              success: true,
+              overlap: false,
+              message: "중복된 아이디 입니다.",
+            });
+        }
+      } else {
+        // 입력받은 아이디가 DB에 없는 경우
+        console.log("사용 가능 아이디");
+        res.status(200).json({
+          success: true,
+          overlap: true,
+          message: "사용 가능한 아이디 입니다.",
+        });
       }
     });
 
