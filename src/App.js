@@ -5,6 +5,7 @@ import ControlMain from "./components/Control_main";
 import Login from "./components/Login";
 import Join from "./components/Join";
 import Notice_main from "./components/Notice_main";
+import Notice_detail from "./components/Notice_detail";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/Notice_main" element={<Notice_main />} />
+        <Route path="/Notice_detail" element={<Notice_detail />} />
       </Routes>
     </Router>
   );
