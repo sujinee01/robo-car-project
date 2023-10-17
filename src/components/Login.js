@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../style/Login.css";
+import styles from "../style/Login.module.css";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -26,10 +26,10 @@ function Login() {
   };
 
   return (
-    <div className="login_body">
-      <div className="login_form">
-        <div className="login_tit_wrapper">
-          <h3 className="login_tit">
+    <div className={styles.login_body}>
+      <div className={styles.login_form}>
+        <div className={styles.login_tit_wrapper}>
+          <h3 className={styles.login_tit}>
             ROBO-CAR
             <br />
             아이디와
@@ -40,30 +40,30 @@ function Login() {
         {loggedIn ? (
           <p>Welcome, {username}!</p>
         ) : (
-          <div className="login_input_wrapper">
-            <label className="login_label">아이디</label>
+          <div className={styles.login_input_wrapper}>
+            <label className={styles.login_label}>아이디</label>
             <input
-              className="id"
+              className={styles.id}
               type="text"
               value={username}
               onChange={handleUsernameChange}
             />
             <br />
-            <label className="login_label">비밀번호</label>
+            <label className={styles.login_label}>비밀번호</label>
             <input
-              className="password"
+              className={styles.password}
               type="password"
               value={password}
               onChange={handlePasswordChange}
             />
             <br />
-            <button className="login_comple" onClick={handleLogin}>
+            <button className={styles.login_comple} onClick={handleLogin}>
               <strong>로그인</strong>
             </button>
             <br />
             <br />
-            <button className="go_join">
-              <strong>회원가입</strong>
+            <button className={styles.go_join}>
+              <a href="/join">회원가입</a>
             </button>
           </div>
         )}

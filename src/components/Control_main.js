@@ -3,15 +3,14 @@
  컴포넌트(모듈)명 = 낙타형 선언
 */
 import React, { useEffect, useState } from "react";
-import "../style/Control_main.css";
-// import s from "../style/Control_main.module.css"
+import styles from "../style/Control_main.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCar, faChargingStation } from "@fortawesome/free-solid-svg-icons";
 const { kakao } = window;
 
 /** 사이드 메뉴 선택시 해당하는 내용을 보여주는 부분 */
 const SideMenuInfo = ({ isOpen }) => {
-  const slide = isOpen ? "side_menu_car_info" : "side_menu_hide";
+  const slide = isOpen ? styles.side_menu_car_info : styles.side_menu_hide;
   return (
     <div>
       <div className={slide}>test</div>
@@ -29,7 +28,7 @@ const SideMenu = () => {
 
   return (
     <div>
-      <div className="side_menu">
+      <div className={styles.side_menu}>
         <ul>
           <li>
             <a href="#" onClick={toggle}>
@@ -134,9 +133,9 @@ const ControlMain = () => {
 
   return (
     <div>
-      <div className="map_wrapper">
+      <div className={styles.map_wrapper}>
         <SideMenu />
-        <div id="map" className="kakao_map">
+        <div id="map" className={styles.kakao_map}>
           <button></button>
         </div>
       </div>

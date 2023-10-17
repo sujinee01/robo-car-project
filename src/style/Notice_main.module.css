@@ -1,0 +1,202 @@
+/* NoticeMain.module.css */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.notice table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.notice section.notice {
+  padding: 80px 0;
+}
+
+.notice .pageTitle {
+  margin-bottom: 60px;
+}
+.notice .pageTitle h3 {
+  font-size: 28px;
+  color: black;
+  font-weight: 900;
+  text-align: left;
+}
+
+.notice .boardSearch .searchWindow {
+  padding: 15px 0;
+  background-color: #f5f5f5;
+}
+.notice .boardSearch .searchWindow .searchWrap {
+  position: relative;
+  /*   padding-right: 124px; */
+  margin: 0 auto;
+  width: 80%;
+  max-width: 564px;
+}
+.notice .boardSearch .searchWindow .searchWrap input {
+  height: 40px;
+  width: 100%;
+  font-size: 14px;
+  padding: 7px 14px;
+  border: 0;
+}
+.notice .boardSearch .searchWindow .searchWrap input:focus {
+  border-color: #293462;
+  outline: 0;
+  border-width: 1px;
+}
+
+.notice .boardSearch .searchWindow .searchWrap .btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 108px;
+  padding: 0;
+  font-size: 16px;
+  border: 0;
+}
+
+.notice .boardTable {
+  font-size: 13px;
+  width: 100%;
+  border-top: 2px solid #293462;
+  border-bottom: 1px solid #293462;
+}
+
+.notice .boardTable a {
+  color: #333;
+  display: inline-block;
+  line-height: 1.4;
+  word-break: break-all;
+  vertical-align: middle;
+}
+.notice .boardTable a:hover {
+  text-decoration: underline;
+}
+.notice .boardTable th {
+  text-align: center;
+}
+
+.boardTable .thNum {
+  width: 100px;
+  text-align: center;
+}
+
+.notice .boardTable .thDate {
+  width: 200px;
+}
+
+.notice .boardTable th,
+.boardTable td {
+  padding: 14px 0;
+}
+
+.notice .boardTable tbody td {
+  border-top: 1px solid #293462;
+  text-align: center;
+}
+
+.notice .boardTable tbody th {
+  padding-left: 28px;
+  padding-right: 14px;
+  border-top: 1px solid #293462;
+  text-align: left;
+}
+
+.notice .boardTable tbody th p {
+  display: none;
+}
+
+.notice .btn {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 400;
+  background: transparent;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.notice .btnSearch {
+  font-weight: 900;
+  background: #293462;
+  color: #f5f5f5;
+}
+
+.notice .btnSearch:hover {
+  background: #f7be16;
+  border-color: #293462;
+  color: #000000;
+
+  transition: 0.2s;
+}
+
+/* reset */
+
+.notice .clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.notice .container {
+  width: 1100px;
+  margin: 0 auto;
+}
+.notice .blind {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+}
+.notice .pageList {
+  text-align: center;
+}
+
+/* button */
+
+.notice .numBtn {
+  display: inline-block;
+  width: 50px;
+  height: 40px;
+}
+
+.notice .btnPage {
+  width: 70%;
+  height: 70%;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #293462;
+  color: #fff;
+}
+
+.notice .btnPage:hover,
+.btnPage:focus {
+  background: #f7be16;
+  color: #000000;
+  transition: 0.2s;
+}
+
+/* 코드 추가 부분 */
+a {
+  cursor: pointer;
+}
