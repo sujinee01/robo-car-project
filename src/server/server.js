@@ -12,11 +12,54 @@ app.use(express.json());
 // URL-encoded 형식의 요청 데이터 파싱 설정
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  console.log("localhost/");
+/** 로그인 요청 처리 */
+app.post("/Login", (req, res) => {
+  const parId = req.body.id; // 로그인 페이지에서 입력 받은 아이디 받아오기
+  const parPw = req.body.password; // 로그인 페이지에서 입력 받은 패스워드 받아오기
+
+  const sql = `SELECT u_id,u_pw FROM user WHERE u_id="${parId}"`;
+
+  db.getConnection((err, conn) => {
+    console.log("로그인 요청");
+    if (err) {
+      console.log("MySQL 연결 실패:", err);
+      res.status(500).json({ success: false, message: "MySQL 연결 실패" });
+      return;
+    }
+    console.log("MySQL 연결 성공");
+
+    conn.query(sql, (err, rows, fields) => {
+      if (err) {
+        console.log("쿼리 실행 실패: ", err);
+        res.status(500).json({ success: false, message: "쿼리 실행 오류" });
+        return;
+      }
+      console.log(rows);
+      if (rows.length > 0) {
+        if (rows[0]["u_pw"] === parPw) {
+          console.log("로그인 성공!");
+          res.status(200).json({ success: true, message: "로그인 성공" });
+        } else {
+          console.log("패스워드 불일치");
+          res
+            .status(200)
+            .json({ success: false, info: "pw", message: "패스워드 불일치" });
+        }
+      } else {
+        console.log("일치하는 사용자 없음");
+        res.status(200).json({
+          success: false,
+          info: "id",
+          message: "일치하는 사용자 없음",
+        });
+      }
+    });
+
+    conn.release();
+  });
 });
 
-// 회원가입 요청 처리
+/** 회원가입 요청 처리 */
 app.post("/Join", (req, res) => {
   const body = req.body;
 
@@ -72,7 +115,7 @@ app.post("/Join", (req, res) => {
   });
 });
 
-// 아이디 중복 검사
+/** 아이디 중복 검사 */
 app.post("/idChk", (req, res) => {
   console.log("아이디 중복 검사 요청됨");
 
@@ -93,13 +136,11 @@ app.post("/idChk", (req, res) => {
         // 입력받은 아이디가 이미 있는 경우
         if (rows[0]["u_id"] === paramId) {
           console.log("중복된 아이디");
-          res
-            .status(200)
-            .json({
-              success: true,
-              overlap: false,
-              message: "중복된 아이디 입니다.",
-            });
+          res.status(200).json({
+            success: true,
+            overlap: false,
+            message: "중복된 아이디 입니다.",
+          });
         }
       } else {
         // 입력받은 아이디가 DB에 없는 경우
