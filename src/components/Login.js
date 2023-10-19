@@ -33,8 +33,10 @@ function Login() {
         const data = await response.json();
 
         if (data.success) {
+          localStorage.setItem("id", id);
+          localStorage.setItem("name", data.u_name);
           // 로그인 성공 시 메시지 설정
-          setLoginMessage(`환영합니다, ${id}님!`);
+          alert(`환영합니다, ${data.u_name}님!`);
           navigate("/"); // 로그인 성공 시 Home 페이지로 이동
         } else {
           // 로그인 실패 시 메시지 설정

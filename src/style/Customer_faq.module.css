@@ -40,10 +40,11 @@
 
 .triangle {
   float: right;
+  transition: 0.2s;
 }
 
 .rotate {
-  rotate: 180deg;
+  rotate: -90deg;
   transition: 0.2s;
 }
 

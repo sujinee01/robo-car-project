@@ -6,10 +6,11 @@ import Login from "./components/Login";
 import Join from "./components/Join";
 import NoticeMain from "./components/Notice_main";
 import NoticeDetail from "./components/Notice_detail";
-import CustomerHelp from "./components/Customer_help";
+import CustomerHelpCenter from "./components/Customer_help_center";
 
 import MyPage from "./components/My_page";
 import ReservationPage from "./components/Reservation";
+import CustomerList from "./components/Customer_review_list";
 
 function App() {
   return (
@@ -21,9 +22,11 @@ function App() {
         <Route path="/join" element={<Join />} />
         <Route path="/noticeMain" element={<NoticeMain />} />
         <Route path="/noticeDetail" element={<NoticeDetail />} />
-        <Route path="/serviceCenter" element={<CustomerHelp />} />
+        <Route path="/helpCenter" element={<CustomerHelpCenter />} />
         {/* <Route path="/mypage" element={<MyPage />} />
         <Route path="/resv" element={<ReservationPage />} /> */}
+
+        <Route path="/test" element={<CustomerList />} />
       </Routes>
     </Router>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../style/Custom_rating.module.css";
+import styles from "../style/Customer_rating.module.css";
 
 function CustomRating() {
   return (
@@ -50,8 +50,8 @@ function CustomRating() {
           rows="10"
           placeholder="내용"
         ></textarea>
+        <button className={styles.sendrating}>등록</button>
       </div>
-      <button className={styles.sendrating}>등록</button>
     </div>
   );
 }

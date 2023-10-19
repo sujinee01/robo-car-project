@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styles from "../style/Custom_rating.module.css";
-import s from "../style/Customer_help.module.css";
+import styles from "../style/Customer_rating.module.css";
+import s from "../style/Customer_help_center.module.css";
 import styled from "styled-components";
 
-import CustomMain from "./Customer_main";
-import CustomRating from "./Customer_rating";
+import CustomerFaq from "./Customer_FAQ";
+import CustomerReviewList from "./Customer_review_list";
 
 const Btn = styled.button`
   width: 400px;
@@ -15,10 +15,11 @@ const Btn = styled.button`
   border: none;
   font-weight: 500;
   cursor: pointer;
+  transition: 0.2s;
 `;
 
 /** 고객 센터 페이지 */
-const CustomerHelp = () => {
+const CustomerHelpCenter = () => {
   const [activeTab, setActiveTab] = useState("자주 묻는 질문");
 
   useEffect(() => {
@@ -28,7 +29,6 @@ const CustomerHelp = () => {
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
-    console.log(activeTab);
   };
 
   return (
@@ -58,9 +58,13 @@ const CustomerHelp = () => {
           </Btn>
         </div>
       </div>
-      {activeTab === "자주 묻는 질문" ? <CustomMain /> : <CustomRating />}
+      {activeTab === "자주 묻는 질문" ? (
+        <CustomerFaq />
+      ) : (
+        <CustomerReviewList />
+      )}
     </div>
   );
 };
 
-export default CustomerHelp;
+export default CustomerHelpCenter;

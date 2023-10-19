@@ -17,7 +17,12 @@ app.post("/Login", (req, res) => {
   const parId = req.body.id; // 로그인 페이지에서 입력 받은 아이디 받아오기
   const parPw = req.body.password; // 로그인 페이지에서 입력 받은 패스워드 받아오기
 
-  const sql = `SELECT u_id,u_pw FROM user WHERE u_id="${parId}"`;
+  let sql = "";
+  if (parId === "admin") {
+    sql = `SELECT * FROM admin WHERE admin_id="${parId}"`;
+  } else {
+    sql = `SELECT u_id,u_pw,u_name FROM user WHERE u_id="${parId}"`;
+  }
 
   db.getConnection((err, conn) => {
     console.log("로그인 요청");
@@ -36,9 +41,13 @@ app.post("/Login", (req, res) => {
       }
       console.log(rows);
       if (rows.length > 0) {
-        if (rows[0]["u_pw"] === parPw) {
+        if (rows[0]["u_pw"] === parPw || rows[0]["admin_pw"] === parPw) {
           console.log("로그인 성공!");
-          res.status(200).json({ success: true, message: "로그인 성공" });
+          res.status(200).json({
+            success: true,
+            u_name: rows[0]["u_name"] || "관리자",
+            message: "로그인 성공",
+          });
         } else {
           console.log("패스워드 불일치");
           res
@@ -47,6 +56,7 @@ app.post("/Login", (req, res) => {
         }
       } else {
         console.log("일치하는 사용자 없음");
+        console.log(sql);
         res.status(200).json({
           success: false,
           info: "id",
@@ -54,7 +64,6 @@ app.post("/Login", (req, res) => {
         });
       }
     });
-
     conn.release();
   });
 });

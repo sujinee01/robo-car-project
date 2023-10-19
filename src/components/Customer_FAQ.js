@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import styles from "../style/Custom_main.module.css";
+import styles from "../style/Customer_faq.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-function CustomMain() {
+function CustomerFaq() {
   const faqData = [
     {
       question: "Q. 관제서비스는 운송예약 후 바로 이용할 수 있나요?",
@@ -30,10 +32,20 @@ function CustomMain() {
   const [arrowRotated, setArrowRotated] = useState([]);
 
   const handleItemClick = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
+    // 모든 삼각형 초기화
+    setArrowRotated(Array(faqData.length).fill(false));
+    // 삼각형 회전 상태를 설정
     setArrowRotated((prevArrowRotated) => {
       const newArrowRotated = [...prevArrowRotated];
-      newArrowRotated[index] = !newArrowRotated[index];
+
+      if (openIndex !== index) {
+        // 새로운 질문을 클릭하면 해당 질문을 열고 이전 질문을 닫는다.
+        newArrowRotated[index] = !newArrowRotated[index];
+        setOpenIndex(index);
+      } else {
+        // 이미 열린 질문을 다시 클릭하면 닫는다.
+        setOpenIndex(null);
+      }
       return newArrowRotated;
     });
   };
@@ -63,7 +75,7 @@ function CustomMain() {
                   arrowRotated[index] ? styles.rotate : ""
                 }`}
               >
-                &#9650;
+                <FontAwesomeIcon icon={faChevronLeft} />
               </p>
             </div>
             {openIndex === index && (
@@ -80,4 +92,4 @@ function CustomMain() {
   );
 }
 
-export default CustomMain;
+export default CustomerFaq;
