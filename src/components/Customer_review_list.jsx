@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import styles from "../style/Customer_review_list.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import styles from "../style/Manager_reserv.module.css";
 
-import CustomRating from "./Customer_rating";
+function Manager_reserv() {
+  const [isOpen, setIsOpen] = useState(null);
 
-function CustomerReviewList() {
+  const toggleAccordion = (index) => {
+    setIsOpen(isOpen === index ? null : index);
+  };
+
   const reviews = [
     {
       num: "05.",
@@ -140,127 +142,65 @@ function CustomerReviewList() {
     },
   ];
 
-  const [openIndex, setOpenIndex] = useState(null);
-  const [arrowRotated, setArrowRotated] = useState([]);
-  const [doRatingClick, setDoRatingClick] = useState(false);
-
-  const toggleAccordion = (index) => {
-    // 모든 삼각형 초기화
-    setArrowRotated(Array(reviews.length).fill(false));
-    // 삼각형 회전 상태를 설정
-    setArrowRotated((prevArrowRotated) => {
-      const newArrowRotated = [...prevArrowRotated];
-
-      if (openIndex !== index) {
-        // 새로운 질문을 클릭하면 해당 질문을 열고 이전 질문을 닫는다.
-        newArrowRotated[index] = !newArrowRotated[index];
-        setOpenIndex(index);
-      } else {
-        // 이미 열린 질문을 다시 클릭하면 닫는다.
-        setOpenIndex(null);
-      }
-      return newArrowRotated;
-    });
-  };
-
-  const doRating = () => {
-    if (!doRatingClick) {
-      setDoRatingClick(true);
-    }
-  };
-
   return (
-    <div>
-      {doRatingClick ? (
-        <CustomRating />
-      ) : (
-        <div className={styles.customratingcontainer}>
-          <div className={styles.listcontainer}>
-            {/* <h1 className={styles.ratingtopic}>고객센터</h1>
-          <div className={styles.listbtn}>
-            <button className={styles.lockbtn}>자주 묻는 질문</button>
-            <button className={styles.checkbtn}>서비스 평가</button>
-          </div> */}
-            <div className={styles.accordionContainer}>
-              {reviews.map((review, index) => (
-                <div
-                  key={index}
-                  className={`${styles.accordionItem} ${
-                    openIndex === index ? styles.open : ""
-                  }`}
-                >
-                  <div
-                    className={styles.accordionHeader}
-                    onClick={() => toggleAccordion(index)}
-                  >
-                    <span className={styles.num}>{review.num}</span>
-                    <span className={styles.title}>{review.title}</span>
-                    <div className={styles.person}>
+    <div className={styles.reservcontainer}>
+      <div className={styles.listcontainer}>
+        <div className={styles.titlecontainer}>
+          <p className={styles.tablenum}>NO.</p>
+          <p className={styles.resnum}>예약번호</p>
+          <p className={styles.resid}>예약자 아이디</p>
+          <p className={styles.resdate}>예약일시</p>
+        </div>
+        <div className={styles.accordionContainer}>
+          {reviews.map((review, index) => (
+            <div
+              key={index}
+              className={`${styles.accordionItem} ${
+                isOpen === index ? styles.open : ""
+              }`}
+            >
+              <div
+                className={styles.accordionHeader}
+                onClick={() => toggleAccordion(index)}
+              >
+                <span className={styles.num}>{review.num}</span>
+                <span className={styles.title}>{review.title}</span>
+                <div className={styles.person}>
+                  <span className={styles.author}>{review.author}</span>
+                </div>
+                <p className={styles.triangle}>&#9660;</p>
+              </div>
+              <div className={styles.openontainer}>
+                {isOpen === index && (
+                  <div className={styles.content}>
+                    <div className={styles.openstar}>
+                      <span className={styles.rating}>{review.rating}</span>
+                    </div>
+                    <div className={styles.openwriter}>
+                      <p>직성자: </p>
                       <span className={styles.author}>{review.author}</span>
                     </div>
-                    <p
-                      className={`${styles.triangle} ${
-                        arrowRotated[index] ? styles.rotate : ""
-                      }`}
-                    >
-                      <FontAwesomeIcon icon={faChevronLeft} />
-                    </p>
+                    <div className={styles.opencar}>
+                      <p>이용 차량번호: </p>
+                      <span className={styles.car}>{review.car}</span>
+                    </div>
+                    <div className={styles.opensatisfy}>
+                      <p>만족도: </p>
+                      <span className={styles.satisfy}>{review.satisfy}</span>
+                    </div>
+                    <div className={styles.opencontent}>
+                      <p>{review.content}</p>
+                    </div>
+                    <button className={styles.btndel}>삭제</button>
                   </div>
-                  <div className={styles.openontainer}>
-                    {openIndex === index && (
-                      <div className={styles.content}>
-                        <div className={styles.openstar}>
-                          <span className={styles.rating}>{review.rating}</span>
-                        </div>
-                        <div className={styles.openwriter}>
-                          <p>직성자: </p>
-                          <span className={styles.author}>{review.author}</span>
-                        </div>
-                        <div className={styles.opencar}>
-                          <p>이용 차량번호: </p>
-                          <span className={styles.car}>{review.car}</span>
-                        </div>
-                        <div className={styles.opensatisfy}>
-                          <p>만족도: </p>
-                          <span className={styles.satisfy}>
-                            {review.satisfy}
-                          </span>
-                        </div>
-                        <div className={styles.opencontent}>
-                          <p>{review.content}</p>
-                        </div>
-                        <button className={styles.btndel}>삭제</button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <button className={styles.btnrate} onClick={doRating}>
-              서비스 평가하기
-            </button>
-            <div className={styles.numlist}>
-              <button className={styles.btnnum}>1</button>
-              <button className={styles.btnnum}>2</button>
-            </div>
-            <div className={styles.explantext}>
-              <div className={styles.customexplan}>
-                <p className={styles.explantel}>1544-0000 </p>
-              </div>
-              <br />
-              <div className={styles.customguide}>
-                <p className={styles.explancontent}>
-                  상담안내시간
-                  <br />
-                  평일(09:00~18:00)주말(10:00~14:00)
-                </p>
+                )}
               </div>
             </div>
-          </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
-export default CustomerReviewList;
+export default Manager_reserv;
