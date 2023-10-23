@@ -191,7 +191,7 @@ function Manager_reserv() {
                           배송 옵션 &nbsp; &nbsp; &nbsp;
                         </p>
                         <Select
-                          className={styles.item}
+                          className={styles.categoryitem}
                           options={CATEGORY_LIST}
                           value={selectedOption}
                           onChange={handleSelectChange}

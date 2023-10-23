@@ -153,13 +153,20 @@
   margin-left: 3%;
   text-align: center;
 }
+
+.categoryitem {
+  margin-left: 3%;
+  text-align: center;
+}
 /* Manager_reserv.module.css 파일에 추가 */
 .react-select-container {
   width: 30px; /* 또는 원하는 너비 값 */
+  margin-bottom: 0;
 }
 
 .react-select__control {
   height: 40px; /* 높이 조절 */
+  margin-bottom: 0;
 }
 
 .btncomp {
@@ -178,6 +185,6 @@
   transition: background-color 0.3s ease; /* 배경색 전환 효과 */
   border: 0;
   font-weight: 900;
-  margin-bottom: 1%;
+  margin-bottom: 2%;
   right: 0;
 }
